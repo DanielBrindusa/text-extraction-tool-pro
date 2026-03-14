@@ -782,56 +782,67 @@ body.dark .toggle-switch input[type="checkbox"] {
 
 
 
+
 /* =========================================================
-   OVERRIDES ADDED IN V6
-   - Lighter, more vivid, sleek light theme
+   OVERRIDES ADDED IN V7
+   - Balanced, softer light theme
+   - Warm subtle waves and reduced brightness
    - Dark-mode HTML attribute toggle visible when OFF
    ========================================================= */
 
 /* Light theme palette refresh */
 body.light-theme {
-  --bg: #f6f8fc;
-  --bg-elevated: rgba(250, 246, 239, 0.96);
-  --bg-elevated-2: rgba(255, 251, 245, 0.98);
-  --card-border: rgba(185, 168, 146, 0.34);
-  --card-shadow: 0 20px 52px rgba(102, 116, 148, 0.10);
-  --text: #1d3658;             /* dark blue text */
-  --muted: #60738f;
-  --field-bg: rgba(255, 252, 246, 0.94);
-  --field-border: rgba(180, 166, 147, 0.38);
-  --field-focus: rgba(113, 127, 255, 0.24);
-  --accent: #6d7cff;
-  --accent-2: #9a8dff;
-  --accent-3: #6aa6a0;
-  --success: #1f9f73;
-  --warning: #c88828;
-  --danger: #d55d7e;
-  --chip: rgba(109, 124, 255, 0.10);
-  --chip-border: rgba(109, 124, 255, 0.20);
-  --scrollbar: rgba(71, 89, 122, 0.18);
-  --scrollbar-hover: rgba(71, 89, 122, 0.30);
-  --selection: rgba(109, 124, 255, 0.18);
+  --bg: #e9edf4;
+  --bg-elevated: rgba(240, 234, 226, 0.94);
+  --bg-elevated-2: rgba(245, 239, 232, 0.96);
+  --card-border: rgba(169, 153, 135, 0.34);
+  --card-shadow: 0 18px 42px rgba(94, 105, 126, 0.12);
+  --text: #213754;
+  --muted: #66778d;
+  --field-bg: rgba(243, 238, 232, 0.96);
+  --field-border: rgba(172, 159, 143, 0.34);
+  --field-focus: rgba(110, 125, 214, 0.22);
+  --accent: #6f7ee7;
+  --accent-2: #9788d9;
+  --accent-3: #9f8d78;
+  --success: #2f8c72;
+  --warning: #b47b3a;
+  --danger: #c2687b;
+  --chip: rgba(111, 126, 231, 0.10);
+  --chip-border: rgba(111, 126, 231, 0.18);
+  --scrollbar: rgba(70, 84, 111, 0.18);
+  --scrollbar-hover: rgba(70, 84, 111, 0.28);
+  --selection: rgba(111, 126, 231, 0.16);
 }
 
 body.light-theme {
   background:
-    radial-gradient(circle at top left, rgba(138, 147, 255, 0.16), transparent 36%),
-    radial-gradient(circle at bottom right, rgba(133, 195, 185, 0.10), transparent 30%),
-    var(--bg);
+    radial-gradient(circle at top left, rgba(191, 171, 145, 0.16), transparent 34%),
+    radial-gradient(circle at 82% 24%, rgba(141, 151, 226, 0.12), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(196, 178, 152, 0.14), transparent 30%),
+    linear-gradient(180deg, #eef1f6 0%, #e6eaf1 100%);
 }
 
 body.light-theme .bg-grid {
   background-image:
-    linear-gradient(rgba(29, 54, 88, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(29, 54, 88, 0.045) 1px, transparent 1px);
+    linear-gradient(rgba(33, 55, 84, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 55, 84, 0.04) 1px, transparent 1px);
+}
+
+body.light-theme .bg-orb.orb-1 {
+  background: radial-gradient(circle, rgba(198, 179, 153, 0.18) 0%, rgba(198, 179, 153, 0) 65%);
+}
+
+body.light-theme .bg-orb.orb-2 {
+  background: radial-gradient(circle, rgba(138, 147, 215, 0.16) 0%, rgba(138, 147, 215, 0) 65%);
 }
 
 body.light-theme .glass-card,
 body.light-theme .panel,
 body.light-theme .stat-card {
-  background: linear-gradient(180deg, rgba(252, 248, 242, 0.96), rgba(247, 241, 232, 0.96));
-  border-color: rgba(187, 171, 149, 0.30);
-  box-shadow: 0 20px 50px rgba(112, 124, 148, 0.10);
+  background: linear-gradient(180deg, rgba(241, 236, 229, 0.94), rgba(234, 228, 220, 0.94));
+  border-color: rgba(168, 153, 136, 0.30);
+  box-shadow: 0 18px 44px rgba(92, 104, 126, 0.10);
 }
 
 body.light-theme h1,
@@ -840,7 +851,7 @@ body.light-theme h3,
 body.light-theme label,
 body.light-theme .stat-card strong,
 body.light-theme .hero-copy p strong {
-  color: #1d3658;
+  color: #213754;
 }
 
 body.light-theme .hero-copy p,
@@ -849,7 +860,7 @@ body.light-theme .section-kicker,
 body.light-theme .field-help,
 body.light-theme .switch-card small,
 body.light-theme .status-chip {
-  color: #60738f;
+  color: #66778d;
 }
 
 body.light-theme input,
@@ -860,33 +871,45 @@ body.light-theme .dropzone,
 body.light-theme .preview-box,
 body.light-theme .test-output,
 body.light-theme .results-preview {
-  background: rgba(255, 253, 249, 0.96);
-  color: #1d3658;
-  border-color: rgba(188, 172, 150, 0.36);
+  background: rgba(242, 237, 231, 0.96);
+  color: #213754;
+  border-color: rgba(169, 154, 136, 0.34);
 }
 
 body.light-theme .glass-btn,
 body.light-theme .btn,
 body.light-theme .segment-btn {
-  background: linear-gradient(180deg, rgba(238, 240, 255, 0.98), rgba(228, 231, 255, 0.96));
-  color: #21395a; /* black-blue text */
-  border-color: rgba(145, 151, 214, 0.30);
-  box-shadow: 0 10px 26px rgba(120, 130, 190, 0.10);
+  background: linear-gradient(180deg, rgba(224, 227, 245, 0.96), rgba(214, 218, 240, 0.96));
+  color: #243b59;
+  border-color: rgba(132, 140, 188, 0.26);
+  box-shadow: 0 8px 20px rgba(108, 117, 164, 0.10);
 }
 
 body.light-theme .glass-btn:hover,
 body.light-theme .btn:hover,
 body.light-theme .segment-btn:hover {
-  background: linear-gradient(180deg, rgba(229, 232, 255, 1), rgba(220, 225, 255, 0.98));
-  color: #1c3251;
+  background: linear-gradient(180deg, rgba(216, 220, 242, 0.98), rgba(208, 212, 237, 0.98));
+  color: #1f344f;
 }
 
 body.light-theme .segment-btn.active,
 body.light-theme .btn-primary,
 body.light-theme .btn-secondary {
-  background: linear-gradient(135deg, rgba(117, 128, 255, 0.95), rgba(153, 141, 255, 0.95));
+  background: linear-gradient(135deg, rgba(116, 125, 214, 0.94), rgba(149, 137, 212, 0.94));
   color: #ffffff;
-  border-color: rgba(117, 128, 255, 0.30);
+  border-color: rgba(116, 125, 214, 0.26);
+}
+
+body.light-theme .theme-toggle {
+  background: linear-gradient(180deg, rgba(232, 227, 218, 0.95), rgba(221, 215, 206, 0.95));
+  color: #213754;
+}
+
+body.light-theme .hero-copy .eyebrow,
+body.light-theme .section-kicker {
+  background: rgba(111, 126, 231, 0.10);
+  border-color: rgba(111, 126, 231, 0.18);
+  color: #5468b8;
 }
 
 /* Dark theme: make the HTML Attribute toggle clearly visible when OFF */
@@ -903,116 +926,11 @@ body:not(.light-theme) .switch-card input:not(:checked) + .switch-ui::before {
 
 /* Light theme: keep the switch elegant as well */
 body.light-theme .switch-card input:not(:checked) + .switch-ui {
-  background: rgba(221, 227, 244, 0.95);
-  border-color: rgba(160, 170, 201, 0.48);
+  background: rgba(210, 214, 226, 0.95);
+  border-color: rgba(148, 156, 181, 0.44);
 }
 
 body.light-theme .switch-card input:not(:checked) + .switch-ui::before {
-  background: linear-gradient(180deg, #ffffff, #eef2fb);
+  background: linear-gradient(180deg, #ffffff, #eceff6);
 }
 
-
-
-/* =========================================================
-   IFRAME / HEIGHT RESPONSIVENESS IMPROVEMENTS
-   ========================================================= */
-
-html, body {
-  min-height: 100%;
-  height: auto;
-}
-
-body {
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.app-shell {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-main,
-.panel,
-.hero,
-.stats {
-  width: 100%;
-}
-
-/* Let the layout breathe inside embedded containers */
-.app-shell {
-  padding-bottom: 24px;
-}
-
-/* Make major sections adapt better to available height */
-.input-grid,
-.two-col-grid,
-.workflow-grid,
-.option-grid,
-.preview-grid {
-  align-items: start;
-}
-
-/* Source preview collapsed = fixed height with scroll */
-.source-preview.collapsed,
-#sourcePreview.collapsed,
-.preview-box.collapsed {
-  max-height: 360px;
-  overflow: auto;
-}
-
-/* Source preview expanded = full content visible */
-.source-preview.expanded,
-#sourcePreview.expanded,
-.preview-box.expanded {
-  max-height: none;
-  overflow: visible;
-}
-
-/* Avoid cramped layout inside narrower iframes */
-@media (max-width: 1200px) {
-  .app-shell {
-    padding-left: 18px;
-    padding-right: 18px;
-  }
-}
-
-@media (max-width: 980px) {
-  .stats,
-  .workflow-grid,
-  .input-grid,
-  .two-col-grid,
-  .preview-grid {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 720px) {
-  .app-shell {
-    padding-left: 14px;
-    padding-right: 14px;
-  }
-
-  .inline-field,
-  .panel-head.split-head,
-  .hero {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .hero-actions,
-  .segment {
-    width: 100%;
-  }
-
-  .segment {
-    justify-content: stretch;
-  }
-
-  .segment-btn,
-  .glass-btn,
-  .btn {
-    width: 100%;
-  }
-}
