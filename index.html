@@ -133,14 +133,20 @@
 
       <div class="two-col-grid">
         <div class="left-stack">
-          <div class="field-block">
+          <div class="field-block" id="startPatternBlock">
             <label for="startPattern">Pattern Before</label>
             <input id="startPattern" type="text" value='data-name="' />
           </div>
 
-          <div class="field-block">
+          <div class="field-block" id="endPatternBlock">
             <label for="endPattern">Pattern After</label>
             <input id="endPattern" type="text" value='" data-option-order' />
+          </div>
+
+          <div class="field-block" id="fullRegexBlock" hidden>
+            <label for="fullRegexPattern">Full Regex Capture Pattern</label>
+            <input id="fullRegexPattern" type="text" value='data-name="(.*?)" data-option-order' />
+            <small class="field-help">When regex mode is enabled, enter one full regex pattern here. Use a capturing group like <code>(...)</code> for the value you want to extract. If no capturing group is present, the full match will be returned.</small>
           </div>
 
           <div class="field-block toggle-row">

@@ -9,6 +9,7 @@ const BUILTIN_TEMPLATES = {
   "Custom": {
     startPattern: 'data-name="',
     endPattern: '" data-option-order',
+    fullRegexPattern: 'data-name="(.*?)" data-option-order',
     regexMode: false,
     caseInsensitive: false,
     htmlAttributeMode: false,
@@ -17,6 +18,7 @@ const BUILTIN_TEMPLATES = {
   "HTML attribute extractor": {
     startPattern: "",
     endPattern: "",
+    fullRegexPattern: "",
     regexMode: false,
     caseInsensitive: false,
     htmlAttributeMode: true,
@@ -25,6 +27,7 @@ const BUILTIN_TEMPLATES = {
   "HTML class attribute": {
     startPattern: "",
     endPattern: "",
+    fullRegexPattern: "",
     regexMode: false,
     caseInsensitive: false,
     htmlAttributeMode: true,
@@ -33,6 +36,7 @@ const BUILTIN_TEMPLATES = {
   "HTML id attribute": {
     startPattern: "",
     endPattern: "",
+    fullRegexPattern: "",
     regexMode: false,
     caseInsensitive: false,
     htmlAttributeMode: true,
@@ -64,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   applySavedSettings();
   syncSourcePreviewMode();
+  updatePatternModeUI();
   updateAttributeModeUI();
   renderSourcePreview("Your source preview will appear here.", true);
   renderResultsPreview("No results to preview.", true);
@@ -79,7 +84,7 @@ function cacheElements() {
     "templateSelect", "saveTemplateBtn", "deleteTemplateBtn",
     "recentSelect", "loadRecentBtn",
     "inputText", "fileInput", "browseFileBtn", "selectedFileLabel", "dropzone", "sourcePreview", "toggleSourcePreviewBtn",
-    "startPattern", "endPattern", "htmlAttributeMode", "attributeName", "attributeNameBlock",
+    "startPattern", "endPattern", "startPatternBlock", "endPatternBlock", "fullRegexPattern", "fullRegexBlock", "htmlAttributeMode", "attributeName", "attributeNameBlock",
     "regexMode", "caseInsensitive", "trimWhitespace", "removeEmpty", "removeDuplicates", "sortResults",
     "testInput", "testPatternBtn", "clearTestBtn", "testOutput",
     "extractBtn", "copyBtn", "downloadTxtBtn", "downloadCsvBtn", "downloadJsonBtn", "clearBtn",
@@ -101,6 +106,10 @@ function bindEvents() {
   el.loadRecentBtn.addEventListener("click", loadRecentInput);
 
   el.htmlAttributeMode.addEventListener("change", updateAttributeModeUI);
+  el.regexMode.addEventListener("change", () => {
+    updatePatternModeUI();
+    updateAttributeModeUI();
+  });
   el.fileInput.addEventListener("change", handleFileSelection);
   el.browseFileBtn.addEventListener("click", event => {
     event.preventDefault();
@@ -134,6 +143,7 @@ function bindEvents() {
   el.testPatternBtn.addEventListener("click", testPattern);
   el.clearTestBtn.addEventListener("click", () => {
     el.testInput.value = "";
+  el.fullRegexPattern.value = 'data-name="(.*?)" data-option-order';
     renderTestOutput("Test output will appear here.", true);
     toast("Pattern tester cleared.", "info");
   });
@@ -146,7 +156,7 @@ function bindEvents() {
   el.clearBtn.addEventListener("click", clearAll);
 
   const persistSettingEvents = [
-    el.startPattern, el.endPattern, el.attributeName,
+    el.startPattern, el.endPattern, el.fullRegexPattern, el.attributeName,
     el.regexMode, el.caseInsensitive, el.trimWhitespace, el.removeEmpty,
     el.removeDuplicates, el.sortResults, el.htmlAttributeMode
   ];
@@ -204,12 +214,22 @@ function switchInputMode(mode) {
   updateCounters();
 }
 
+function updatePatternModeUI() {
+  const showFullRegex = el.regexMode.checked && !el.htmlAttributeMode.checked;
+  el.startPatternBlock.hidden = showFullRegex || el.htmlAttributeMode.checked;
+  el.endPatternBlock.hidden = showFullRegex || el.htmlAttributeMode.checked;
+  el.fullRegexBlock.hidden = !showFullRegex;
+}
+
 function updateAttributeModeUI() {
-  const enabled = el.htmlAttributeMode.checked;
-  el.attributeNameBlock.style.opacity = enabled ? "1" : "0.6";
-  el.attributeName.disabled = !enabled;
-  el.startPattern.disabled = enabled;
-  el.endPattern.disabled = enabled;
+  const htmlMode = el.htmlAttributeMode.checked;
+  el.attributeNameBlock.hidden = !htmlMode;
+
+  el.startPattern.disabled = htmlMode || el.regexMode.checked;
+  el.endPattern.disabled = htmlMode || el.regexMode.checked;
+  el.fullRegexPattern.disabled = htmlMode || !el.regexMode.checked;
+
+  updatePatternModeUI();
   persistSettings();
 }
 
@@ -272,6 +292,7 @@ function applySavedSettings() {
   state.sourcePreviewExpanded = !!settings.sourcePreviewExpanded;
   el.startPattern.value = settings.startPattern ?? el.startPattern.value;
   el.endPattern.value = settings.endPattern ?? el.endPattern.value;
+  el.fullRegexPattern.value = settings.fullRegexPattern ?? el.fullRegexPattern.value;
   el.attributeName.value = settings.attributeName ?? el.attributeName.value;
   el.regexMode.checked = !!settings.regexMode;
   el.caseInsensitive.checked = !!settings.caseInsensitive;
@@ -286,6 +307,7 @@ function persistSettings() {
   const settings = {
     startPattern: el.startPattern.value,
     endPattern: el.endPattern.value,
+    fullRegexPattern: el.fullRegexPattern.value,
     attributeName: el.attributeName.value,
     regexMode: el.regexMode.checked,
     caseInsensitive: el.caseInsensitive.checked,
@@ -320,11 +342,13 @@ function applySelectedTemplate() {
 
   el.startPattern.value = template.startPattern ?? "";
   el.endPattern.value = template.endPattern ?? "";
+  el.fullRegexPattern.value = template.fullRegexPattern ?? "";
   el.regexMode.checked = !!template.regexMode;
   el.caseInsensitive.checked = !!template.caseInsensitive;
   el.htmlAttributeMode.checked = !!template.htmlAttributeMode;
   el.attributeName.value = template.attributeName ?? "data-name";
 
+  updatePatternModeUI();
   updateAttributeModeUI();
   persistSettings();
   toast(`Template applied: ${selected}`, "success");
@@ -348,6 +372,7 @@ function saveCurrentTemplate() {
   state.userTemplates[cleanName] = {
     startPattern: el.startPattern.value,
     endPattern: el.endPattern.value,
+    fullRegexPattern: el.fullRegexPattern.value,
     regexMode: el.regexMode.checked,
     caseInsensitive: el.caseInsensitive.checked,
     htmlAttributeMode: el.htmlAttributeMode.checked,
@@ -413,23 +438,27 @@ function compilePatternParts() {
     };
   }
 
-  const startPattern = el.startPattern.value;
-  const endPattern = el.endPattern.value;
+  if (el.regexMode.checked) {
+    const fullRegexPattern = el.fullRegexPattern.value.trim();
+    if (!fullRegexPattern) throw new Error("Please enter the full regex capture pattern.");
 
-  if (!el.regexMode.checked) {
-    if (!startPattern) throw new Error("Please enter the pattern before the text to extract.");
-    if (!endPattern) throw new Error("Please enter the pattern after the text to extract.");
+    const regex = new RegExp(fullRegexPattern, flags);
+    const hasCapturingGroup = /(^|[^\\])\((?!\?[:!=<])/.test(fullRegexPattern);
+
     return {
-      regex: new RegExp(`${escapeRegex(startPattern)}(.*?)${escapeRegex(endPattern)}`, flags),
-      groupIndex: 1
+      regex,
+      groupIndex: hasCapturingGroup ? 1 : 0
     };
   }
 
-  if (!startPattern) throw new Error("Please enter the regex pattern before the text to extract.");
-  if (!endPattern) throw new Error("Please enter the regex pattern after the text to extract.");
+  const startPattern = el.startPattern.value;
+  const endPattern = el.endPattern.value;
+
+  if (!startPattern) throw new Error("Please enter the pattern before the text to extract.");
+  if (!endPattern) throw new Error("Please enter the pattern after the text to extract.");
 
   return {
-    regex: new RegExp(`${startPattern}(.*?)${endPattern}`, flags),
+    regex: new RegExp(`${escapeRegex(startPattern)}(.*?)${escapeRegex(endPattern)}`, flags),
     groupIndex: 1
   };
 }
@@ -600,6 +629,7 @@ function clearAll() {
   el.fileInput.value = "";
   el.selectedFileLabel.textContent = "No file selected";
   el.testInput.value = "";
+  el.fullRegexPattern.value = 'data-name="(.*?)" data-option-order';
 
   state.currentFileName = "";
   state.currentSourceType = "Manual";
@@ -611,6 +641,8 @@ function clearAll() {
   renderSourcePreview("Your source preview will appear here.", true);
   renderResultsPreview("No results to preview.", true);
   renderTestOutput("Test output will appear here.", true);
+  updatePatternModeUI();
+  updateAttributeModeUI();
   setStatus("Ready", "info");
   updateCounters();
   log("Cleared fields and previews.");
