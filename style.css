@@ -413,7 +413,7 @@ pre.code-preview.empty {
 
 .segment {
   display: inline-flex;
-  padding: 6px;
+  padding: 15px;
   border-radius: 18px;
   background: var(--field-bg);
   border: 1px solid var(--field-border);
