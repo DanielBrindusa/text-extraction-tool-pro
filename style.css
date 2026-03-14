@@ -737,3 +737,46 @@ body.light-theme .btn-ghost {
   color: #43546d;
   background: rgba(255,255,255,0.72);
 }
+
+/* ---------- Improved Light Theme ---------- */
+body.light {
+    background: #f4f7fb;
+    color: #1f2937;
+}
+
+body.light .card {
+    background: #ffffff;
+    border: 1px solid #e3e8ef;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+}
+
+body.light input,
+body.light textarea {
+    background: #ffffff;
+    border: 1px solid #d6dde6;
+    color: #111827;
+}
+
+body.light button {
+    background: #5f7893;
+    color: white;
+}
+
+body.light button:hover {
+    background: #4c667f;
+}
+
+/* ---------- Dark Theme Section Borders ---------- */
+body.dark .card {
+    border: 1px solid #3b4655;
+}
+
+/* ---------- Fix Toggle Visibility ---------- */
+.toggle-switch input[type="checkbox"] {
+    accent-color: #ffffff;
+}
+
+body.dark .toggle-switch input[type="checkbox"] {
+    accent-color: #ffffff;
+}
+
