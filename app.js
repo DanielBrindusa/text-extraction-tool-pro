@@ -50,6 +50,9 @@ const state = {
   currentSourceType: "Manual",
   currentSourceText: "",
   sourcePreviewExpanded: false,
+  testOutputExpanded: false,
+  resultsPreviewExpanded: false,
+  activityLogExpanded: false,
   lastResults: [],
   lastDuplicatesRemoved: 0,
   lastRawCount: 0,
@@ -68,6 +71,9 @@ document.addEventListener("DOMContentLoaded", () => {
   bindEvents();
   applySavedSettings();
   syncSourcePreviewMode();
+  syncTestOutputMode();
+  syncResultsPreviewMode();
+  syncActivityLogMode();
   updatePatternModeUI();
   updateAttributeModeUI();
   renderSourcePreview("Your source preview will appear here.", true);
@@ -86,9 +92,9 @@ function cacheElements() {
     "inputText", "fileInput", "browseFileBtn", "selectedFileLabel", "dropzone", "sourcePreview", "toggleSourcePreviewBtn",
     "startPattern", "endPattern", "startPatternBlock", "endPatternBlock", "fullRegexPattern", "fullRegexBlock", "htmlAttributeMode", "attributeName", "attributeNameBlock",
     "regexMode", "caseInsensitive", "trimWhitespace", "removeEmpty", "removeDuplicates", "sortResults",
-    "testInput", "testPatternBtn", "clearTestBtn", "testOutput",
+    "testInput", "testPatternBtn", "clearTestBtn", "testOutput", "toggleTestOutputBtn",
     "extractBtn", "copyBtn", "downloadTxtBtn", "downloadCsvBtn", "downloadJsonBtn", "clearBtn",
-    "resultsPreview", "activityLog", "statusChip", "toastWrap",
+    "resultsPreview", "toggleResultsPreviewBtn", "activityLog", "toggleActivityLogBtn", "statusChip", "toastWrap",
     "pasteModePane", "fileModePane"
   ].forEach(id => el[id] = document.getElementById(id));
 }
@@ -100,6 +106,9 @@ function bindEvents() {
 
   el.themeToggle.addEventListener("click", toggleTheme);
   el.toggleSourcePreviewBtn.addEventListener("click", toggleSourcePreviewMode);
+  el.toggleTestOutputBtn.addEventListener("click", toggleTestOutputMode);
+  el.toggleResultsPreviewBtn.addEventListener("click", toggleResultsPreviewMode);
+  el.toggleActivityLogBtn.addEventListener("click", toggleActivityLogMode);
   el.templateSelect.addEventListener("change", applySelectedTemplate);
   el.saveTemplateBtn.addEventListener("click", saveCurrentTemplate);
   el.deleteTemplateBtn.addEventListener("click", deleteTemplate);
@@ -194,6 +203,56 @@ function syncThemeUI() {
   el.themeLabel.textContent = light ? "Light" : "Dark";
   el.themeIcon.textContent = light ? "☀️" : "🌙";
 }
+
+
+function syncExpandablePreview(node, button, expanded) {
+  if (!node || !button) return;
+  node.classList.toggle("collapsed", !expanded);
+  node.classList.toggle("expanded", expanded);
+  button.textContent = expanded ? "Collapse" : "Expand";
+  button.setAttribute("aria-expanded", String(expanded));
+}
+
+function toggleSourcePreviewMode() {
+  state.sourcePreviewExpanded = !state.sourcePreviewExpanded;
+  syncSourcePreviewMode();
+  persistSettings();
+}
+
+function syncSourcePreviewMode() {
+  syncExpandablePreview(el.sourcePreview, el.toggleSourcePreviewBtn, state.sourcePreviewExpanded);
+}
+
+function toggleTestOutputMode() {
+  state.testOutputExpanded = !state.testOutputExpanded;
+  syncTestOutputMode();
+  persistSettings();
+}
+
+function syncTestOutputMode() {
+  syncExpandablePreview(el.testOutput, el.toggleTestOutputBtn, state.testOutputExpanded);
+}
+
+function toggleResultsPreviewMode() {
+  state.resultsPreviewExpanded = !state.resultsPreviewExpanded;
+  syncResultsPreviewMode();
+  persistSettings();
+}
+
+function syncResultsPreviewMode() {
+  syncExpandablePreview(el.resultsPreview, el.toggleResultsPreviewBtn, state.resultsPreviewExpanded);
+}
+
+function toggleActivityLogMode() {
+  state.activityLogExpanded = !state.activityLogExpanded;
+  syncActivityLogMode();
+  persistSettings();
+}
+
+function syncActivityLogMode() {
+  syncExpandablePreview(el.activityLog, el.toggleActivityLogBtn, state.activityLogExpanded);
+}
+
 
 function switchInputMode(mode) {
   state.currentInputMode = mode;
@@ -290,6 +349,9 @@ function applySavedSettings() {
   if (!settings) return;
 
   state.sourcePreviewExpanded = !!settings.sourcePreviewExpanded;
+  state.testOutputExpanded = !!settings.testOutputExpanded;
+  state.resultsPreviewExpanded = !!settings.resultsPreviewExpanded;
+  state.activityLogExpanded = !!settings.activityLogExpanded;
   el.startPattern.value = settings.startPattern ?? el.startPattern.value;
   el.endPattern.value = settings.endPattern ?? el.endPattern.value;
   el.fullRegexPattern.value = settings.fullRegexPattern ?? el.fullRegexPattern.value;
@@ -316,7 +378,10 @@ function persistSettings() {
     removeDuplicates: el.removeDuplicates.checked,
     sortResults: el.sortResults.checked,
     htmlAttributeMode: el.htmlAttributeMode.checked,
-    sourcePreviewExpanded: state.sourcePreviewExpanded
+    sourcePreviewExpanded: state.sourcePreviewExpanded,
+    testOutputExpanded: state.testOutputExpanded,
+    resultsPreviewExpanded: state.resultsPreviewExpanded,
+    activityLogExpanded: state.activityLogExpanded
   };
   localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 }
@@ -641,6 +706,10 @@ function clearAll() {
   renderSourcePreview("Your source preview will appear here.", true);
   renderResultsPreview("No results to preview.", true);
   renderTestOutput("Test output will appear here.", true);
+  syncSourcePreviewMode();
+  syncTestOutputMode();
+  syncResultsPreviewMode();
+  syncActivityLogMode();
   updatePatternModeUI();
   updateAttributeModeUI();
   setStatus("Ready", "info");

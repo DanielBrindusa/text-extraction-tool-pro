@@ -868,3 +868,70 @@ body.light-theme .status-chip {
 .segment-btn:last-child {
   margin-right: 0;
 }
+
+
+/* =========================================================
+   EXPAND / COLLAPSE FOR ALL PREVIEW PANELS
+   ========================================================= */
+.expandable-preview {
+  transition: max-height 0.28s ease, min-height 0.28s ease, padding-right 0.28s ease, box-shadow 0.28s ease;
+}
+
+.expandable-preview.collapsed {
+  max-height: 360px;
+  overflow: auto;
+}
+
+.expandable-preview.expanded {
+  max-height: none;
+  overflow: visible;
+}
+
+/* =========================================================
+   INPUT / UPLOAD ALIGNMENT WITH SOURCE PREVIEW
+   ========================================================= */
+.input-grid {
+  align-items: stretch;
+}
+
+.source-preview-block {
+  grid-column: 2;
+  grid-row: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.mode-pane.active,
+.source-preview-block {
+  min-height: 100%;
+}
+
+.mode-pane.active .editor,
+.mode-pane.active .dropzone,
+.source-preview-block .expandable-preview {
+  min-height: 360px;
+}
+
+.mode-pane.active .editor {
+  height: 360px;
+}
+
+.mode-pane.active .dropzone,
+.mode-pane.active .dropzone-inner {
+  min-height: 360px;
+}
+
+.source-preview-block .expandable-preview.collapsed {
+  height: 360px;
+}
+
+@media (max-width: 980px) {
+  .mode-pane.active .editor,
+  .mode-pane.active .dropzone,
+  .mode-pane.active .dropzone-inner,
+  .source-preview-block .expandable-preview.collapsed,
+  .expandable-preview.collapsed {
+    height: auto;
+    min-height: 280px;
+  }
+}

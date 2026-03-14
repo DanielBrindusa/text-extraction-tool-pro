@@ -118,7 +118,7 @@
             <label for="sourcePreview">Source Preview</label>
             <button class="btn btn-ghost btn-small" id="toggleSourcePreviewBtn" type="button" aria-expanded="false">Expand</button>
           </div>
-          <pre id="sourcePreview" class="code-preview source-preview collapsed empty">Your source preview will appear here.</pre>
+          <pre id="sourcePreview" class="code-preview source-preview expandable-preview collapsed empty">Your source preview will appear here.</pre>
         </div>
       </div>
     </section>
@@ -184,7 +184,11 @@
             <button class="btn btn-primary" id="testPatternBtn" type="button">Test Pattern</button>
             <button class="btn btn-ghost" id="clearTestBtn" type="button">Clear Test</button>
           </div>
-          <pre id="testOutput" class="code-preview empty">Test output will appear here.</pre>
+          <div class="preview-label-row">
+            <label for="testOutput">Test Output</label>
+            <button class="btn btn-ghost btn-small" id="toggleTestOutputBtn" type="button" aria-expanded="false">Expand</button>
+          </div>
+          <pre id="testOutput" class="code-preview expandable-preview collapsed empty">Test output will appear here.</pre>
         </div>
       </div>
     </section>
@@ -209,13 +213,19 @@
 
       <div class="preview-grid">
         <div class="field-block">
-          <label for="resultsPreview">Results Preview</label>
-          <pre id="resultsPreview" class="code-preview empty">No results to preview.</pre>
+          <div class="preview-label-row">
+            <label for="resultsPreview">Results Preview</label>
+            <button class="btn btn-ghost btn-small" id="toggleResultsPreviewBtn" type="button" aria-expanded="false">Expand</button>
+          </div>
+          <pre id="resultsPreview" class="code-preview expandable-preview collapsed empty">No results to preview.</pre>
         </div>
 
         <div class="field-block">
-          <label for="activityLog">Activity Log</label>
-          <pre id="activityLog" class="code-preview empty">The activity log will appear here.</pre>
+          <div class="preview-label-row">
+            <label for="activityLog">Activity Log</label>
+            <button class="btn btn-ghost btn-small" id="toggleActivityLogBtn" type="button" aria-expanded="false">Expand</button>
+          </div>
+          <pre id="activityLog" class="code-preview expandable-preview collapsed empty">The activity log will appear here.</pre>
         </div>
       </div>
     </section>
