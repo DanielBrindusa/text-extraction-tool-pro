@@ -45,6 +45,7 @@ const state = {
   currentFileName: "",
   currentSourceType: "Manual",
   currentSourceText: "",
+  sourcePreviewExpanded: false,
   lastResults: [],
   lastDuplicatesRemoved: 0,
   lastRawCount: 0,
@@ -62,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   populateRecents();
   bindEvents();
   applySavedSettings();
+  syncSourcePreviewMode();
   updateAttributeModeUI();
   renderSourcePreview("Your source preview will appear here.", true);
   renderResultsPreview("No results to preview.", true);
@@ -76,7 +78,7 @@ function cacheElements() {
     "counterMatches", "counterUnique", "counterDuplicates", "counterSource",
     "templateSelect", "saveTemplateBtn", "deleteTemplateBtn",
     "recentSelect", "loadRecentBtn",
-    "inputText", "fileInput", "selectedFileLabel", "dropzone", "sourcePreview",
+    "inputText", "fileInput", "selectedFileLabel", "dropzone", "sourcePreview", "toggleSourcePreviewBtn",
     "startPattern", "endPattern", "htmlAttributeMode", "attributeName", "attributeNameBlock",
     "regexMode", "caseInsensitive", "trimWhitespace", "removeEmpty", "removeDuplicates", "sortResults",
     "testInput", "testPatternBtn", "clearTestBtn", "testOutput",
@@ -92,6 +94,7 @@ function bindEvents() {
   });
 
   el.themeToggle.addEventListener("click", toggleTheme);
+  el.toggleSourcePreviewBtn.addEventListener("click", toggleSourcePreviewMode);
   el.templateSelect.addEventListener("change", applySelectedTemplate);
   el.saveTemplateBtn.addEventListener("click", saveCurrentTemplate);
   el.deleteTemplateBtn.addEventListener("click", deleteTemplate);
@@ -201,6 +204,20 @@ function updateAttributeModeUI() {
   persistSettings();
 }
 
+function toggleSourcePreviewMode() {
+  state.sourcePreviewExpanded = !state.sourcePreviewExpanded;
+  syncSourcePreviewMode();
+  persistSettings();
+}
+
+function syncSourcePreviewMode() {
+  const expanded = !!state.sourcePreviewExpanded;
+  el.sourcePreview.classList.toggle("expanded", expanded);
+  el.sourcePreview.classList.toggle("collapsed", !expanded);
+  el.toggleSourcePreviewBtn.textContent = expanded ? "Collapse" : "Expand";
+  el.toggleSourcePreviewBtn.setAttribute("aria-expanded", String(expanded));
+}
+
 function handleFileSelection(event) {
   const file = event.target.files?.[0];
   if (file) readFile(file);
@@ -234,6 +251,7 @@ function applySavedSettings() {
   const settings = loadJSON(STORAGE_KEYS.settings, null);
   if (!settings) return;
 
+  state.sourcePreviewExpanded = !!settings.sourcePreviewExpanded;
   el.startPattern.value = settings.startPattern ?? el.startPattern.value;
   el.endPattern.value = settings.endPattern ?? el.endPattern.value;
   el.attributeName.value = settings.attributeName ?? el.attributeName.value;
@@ -257,7 +275,8 @@ function persistSettings() {
     removeEmpty: el.removeEmpty.checked,
     removeDuplicates: el.removeDuplicates.checked,
     sortResults: el.sortResults.checked,
-    htmlAttributeMode: el.htmlAttributeMode.checked
+    htmlAttributeMode: el.htmlAttributeMode.checked,
+    sourcePreviewExpanded: state.sourcePreviewExpanded
   };
   localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
 }
