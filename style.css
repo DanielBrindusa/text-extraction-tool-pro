@@ -413,8 +413,7 @@ pre.code-preview.empty {
 
 .segment {
   display: inline-flex;
-  gap: 10px;
-  padding: 9px;
+  padding: 6px;
   border-radius: 18px;
   background: var(--field-bg);
   border: 1px solid var(--field-border);
@@ -858,4 +857,14 @@ body.light-theme .hero-copy p,
 body.light-theme .field-help,
 body.light-theme .status-chip {
   color:#a8bde3;
+}
+
+
+/* Added spacing between segmented buttons (Paste Text / Upload File etc.) */
+.segment-btn {
+  margin-right: 10px;
+}
+
+.segment-btn:last-child {
+  margin-right: 0;
 }
