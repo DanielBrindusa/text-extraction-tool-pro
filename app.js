@@ -78,7 +78,7 @@ function cacheElements() {
     "counterMatches", "counterUnique", "counterDuplicates", "counterSource",
     "templateSelect", "saveTemplateBtn", "deleteTemplateBtn",
     "recentSelect", "loadRecentBtn",
-    "inputText", "fileInput", "selectedFileLabel", "dropzone", "sourcePreview", "toggleSourcePreviewBtn",
+    "inputText", "fileInput", "browseFileBtn", "selectedFileLabel", "dropzone", "sourcePreview", "toggleSourcePreviewBtn",
     "startPattern", "endPattern", "htmlAttributeMode", "attributeName", "attributeNameBlock",
     "regexMode", "caseInsensitive", "trimWhitespace", "removeEmpty", "removeDuplicates", "sortResults",
     "testInput", "testPatternBtn", "clearTestBtn", "testOutput",
@@ -102,6 +102,15 @@ function bindEvents() {
 
   el.htmlAttributeMode.addEventListener("change", updateAttributeModeUI);
   el.fileInput.addEventListener("change", handleFileSelection);
+  el.browseFileBtn.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    el.fileInput.click();
+  });
+  el.dropzone.addEventListener("click", event => {
+    if (event.target === el.browseFileBtn) return;
+    el.fileInput.click();
+  });
 
   ["dragenter", "dragover"].forEach(evt => {
     el.dropzone.addEventListener(evt, e => {
@@ -220,7 +229,11 @@ function syncSourcePreviewMode() {
 
 function handleFileSelection(event) {
   const file = event.target.files?.[0];
-  if (file) readFile(file);
+  if (file) {
+    readFile(file);
+  } else {
+    toast("No file was selected.", "info");
+  }
 }
 
 function readFile(file) {
@@ -238,13 +251,18 @@ function readFile(file) {
     switchInputMode("file");
     updateCounters();
     log(`Loaded file: ${file.name} (${file.size.toLocaleString()} bytes)`);
+    el.fileInput.value = "";
     toast(`Loaded file: ${file.name}`, "success");
   };
   reader.onerror = () => {
     toast("Could not read the selected file.", "error");
     log("Failed to read selected file.");
   };
-  reader.readAsText(file);
+  try {
+    reader.readAsText(file, "utf-8");
+  } catch {
+    reader.readAsText(file);
+  }
 }
 
 function applySavedSettings() {

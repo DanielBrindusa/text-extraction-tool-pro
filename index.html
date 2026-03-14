@@ -106,15 +106,19 @@
             <div class="dropzone-inner">
               <div class="dropzone-icon">⬆</div>
               <h3>Drop a file here</h3>
-              <p>or click to browse a supported text file</p>
+              <p>or use the button below to browse a supported text file</p>
+              <button class="btn btn-secondary btn-small" id="browseFileBtn" type="button">Choose File</button>
               <span class="file-pill" id="selectedFileLabel">No file selected</span>
             </div>
           </div>
         </div>
 
         <div class="field-block source-preview-block">
-          <label for="sourcePreview">Source Preview</label>
-          <pre id="sourcePreview" class="code-preview empty">Your source preview will appear here.</pre>
+          <div class="preview-label-row">
+            <label for="sourcePreview">Source Preview</label>
+            <button class="btn btn-ghost btn-small" id="toggleSourcePreviewBtn" type="button" aria-expanded="false">Expand</button>
+          </div>
+          <pre id="sourcePreview" class="code-preview source-preview collapsed empty">Your source preview will appear here.</pre>
         </div>
       </div>
     </section>
