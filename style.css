@@ -935,3 +935,38 @@ body.light-theme .status-chip {
     min-height: 280px;
   }
 }
+
+
+/* =========================================================
+   ALIGN SOURCE PREVIEW HEADER WITH INPUT / UPLOAD HEADER
+   ========================================================= */
+.source-preview-block .preview-label-row {
+  min-height: 34px;
+  align-items: flex-start;
+}
+
+.source-preview-block .preview-label-row label {
+  padding-top: 6px;
+}
+
+.source-preview-block .preview-label-row .btn-small {
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+/* Keep the preview box aligned with the left input area */
+.source-preview-block .expandable-preview.collapsed,
+.source-preview-block .expandable-preview.expanded {
+  margin-top: 0;
+}
+
+/* On smaller screens revert to normal flow */
+@media (max-width: 980px) {
+  .source-preview-block .preview-label-row {
+    min-height: auto;
+  }
+
+  .source-preview-block .preview-label-row label {
+    padding-top: 0;
+  }
+}
