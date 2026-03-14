@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Extraction Tool Pro</title>
+  <meta name="description" content="Modern browser-based text extraction tool with pattern matching, previews, templates, and downloads." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-grid"></div>
+
+  <main class="app-shell">
+    <header class="hero reveal">
+      <div class="hero-copy">
+        <span class="eyebrow">Browser Edition</span>
+        <h1>Text Extraction Tool Pro</h1>
+        <p>
+          Extract text between patterns directly in your browser, preview the results instantly,
+          test your rules, save templates locally, and download the output in multiple formats.
+        </p>
+      </div>
+
+      <div class="hero-actions">
+        <button class="theme-toggle glass-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="theme-toggle__icon" id="themeIcon">🌙</span>
+          <span id="themeLabel">Dark</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="stats reveal stagger">
+      <article class="stat-card glass-card">
+        <span class="stat-label">Matches</span>
+        <strong id="counterMatches">0</strong>
+      </article>
+      <article class="stat-card glass-card">
+        <span class="stat-label">Unique</span>
+        <strong id="counterUnique">0</strong>
+      </article>
+      <article class="stat-card glass-card">
+        <span class="stat-label">Duplicates Removed</span>
+        <strong id="counterDuplicates">0</strong>
+      </article>
+      <article class="stat-card glass-card">
+        <span class="stat-label">Source</span>
+        <strong id="counterSource">Manual</strong>
+      </article>
+    </section>
+
+    <section class="panel glass-card reveal">
+      <div class="panel-head split-head">
+        <div>
+          <span class="section-kicker">Workflow</span>
+          <h2>Setup</h2>
+        </div>
+      </div>
+
+      <div class="workflow-grid">
+        <div class="field-block">
+          <label for="templateSelect">Template</label>
+          <div class="inline-field">
+            <select id="templateSelect"></select>
+            <button class="btn btn-secondary" id="saveTemplateBtn" type="button">Save Template</button>
+            <button class="btn btn-ghost" id="deleteTemplateBtn" type="button">Delete</button>
+          </div>
+        </div>
+
+        <div class="field-block">
+          <label for="recentSelect">Recent Inputs</label>
+          <div class="inline-field">
+            <select id="recentSelect"></select>
+            <button class="btn btn-secondary" id="loadRecentBtn" type="button">Load Recent</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel glass-card reveal">
+      <div class="panel-head split-head">
+        <div>
+          <span class="section-kicker">Input</span>
+          <h2>Source Text</h2>
+        </div>
+        <div class="segment" id="inputModeSegment" role="tablist" aria-label="Input mode">
+          <button class="segment-btn active" data-mode="paste" type="button">Paste Text</button>
+          <button class="segment-btn" data-mode="file" type="button">Upload File</button>
+        </div>
+      </div>
+
+      <div class="input-grid">
+        <div class="field-block mode-pane active" id="pasteModePane">
+          <label for="inputText">Input Text</label>
+          <textarea id="inputText" class="editor" placeholder="Paste your source text here..."></textarea>
+        </div>
+
+        <div class="field-block mode-pane" id="fileModePane" hidden>
+          <label for="fileInput">Upload Text File</label>
+          <div class="dropzone" id="dropzone">
+            <input id="fileInput" type="file" accept=".txt,.html,.csv,.json,.xml,.log,.md,.js,.css,.sql,.ini,.cfg,.yaml,.yml" />
+            <div class="dropzone-inner">
+              <div class="dropzone-icon">⬆</div>
+              <h3>Drop a file here</h3>
+              <p>or click to browse a supported text file</p>
+              <span class="file-pill" id="selectedFileLabel">No file selected</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="field-block source-preview-block">
+          <label for="sourcePreview">Source Preview</label>
+          <pre id="sourcePreview" class="code-preview empty">Your source preview will appear here.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel glass-card reveal">
+      <div class="panel-head">
+        <div>
+          <span class="section-kicker">Patterns</span>
+          <h2>Extraction Rules</h2>
+        </div>
+      </div>
+
+      <div class="two-col-grid">
+        <div class="left-stack">
+          <div class="field-block">
+            <label for="startPattern">Pattern Before</label>
+            <input id="startPattern" type="text" value='data-name="' />
+          </div>
+
+          <div class="field-block">
+            <label for="endPattern">Pattern After</label>
+            <input id="endPattern" type="text" value='" data-option-order' />
+          </div>
+
+          <div class="field-block toggle-row">
+            <label class="switch-card">
+              <input type="checkbox" id="htmlAttributeMode" />
+              <span class="switch-ui"></span>
+              <span>
+                <strong>Automatic HTML Attribute Extraction</strong>
+                <small>Extract values like data-name, class, or id directly from HTML.</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="field-block" id="attributeNameBlock">
+            <label for="attributeName">Attribute Name</label>
+            <input id="attributeName" type="text" value="data-name" />
+          </div>
+
+          <div class="option-grid">
+            <label class="check-card"><input type="checkbox" id="regexMode" /><span>Use regex patterns</span></label>
+            <label class="check-card"><input type="checkbox" id="caseInsensitive" /><span>Case insensitive</span></label>
+            <label class="check-card"><input type="checkbox" id="trimWhitespace" checked /><span>Trim whitespace</span></label>
+            <label class="check-card"><input type="checkbox" id="removeEmpty" checked /><span>Remove empty results</span></label>
+            <label class="check-card"><input type="checkbox" id="removeDuplicates" /><span>Remove duplicates</span></label>
+            <label class="check-card"><input type="checkbox" id="sortResults" /><span>Sort alphabetically</span></label>
+          </div>
+        </div>
+
+        <div class="right-stack tester-stack">
+          <div class="field-block">
+            <label for="testInput">Pattern Tester</label>
+            <textarea id="testInput" class="editor small" placeholder="Paste sample text here to test the current settings..."></textarea>
+          </div>
+          <div class="button-row compact">
+            <button class="btn btn-primary" id="testPatternBtn" type="button">Test Pattern</button>
+            <button class="btn btn-ghost" id="clearTestBtn" type="button">Clear Test</button>
+          </div>
+          <pre id="testOutput" class="code-preview empty">Test output will appear here.</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel glass-card reveal">
+      <div class="panel-head split-head">
+        <div>
+          <span class="section-kicker">Results</span>
+          <h2>Preview & Download</h2>
+        </div>
+        <div class="status-chip" id="statusChip">Ready</div>
+      </div>
+
+      <div class="button-row action-row">
+        <button class="btn btn-primary btn-glow" id="extractBtn" type="button">Extract Preview</button>
+        <button class="btn btn-secondary" id="copyBtn" type="button">Copy Results</button>
+        <button class="btn btn-accent" id="downloadTxtBtn" type="button">Download TXT</button>
+        <button class="btn btn-accent" id="downloadCsvBtn" type="button">Download CSV</button>
+        <button class="btn btn-accent" id="downloadJsonBtn" type="button">Download JSON</button>
+        <button class="btn btn-ghost" id="clearBtn" type="button">Clear</button>
+      </div>
+
+      <div class="preview-grid">
+        <div class="field-block">
+          <label for="resultsPreview">Results Preview</label>
+          <pre id="resultsPreview" class="code-preview empty">No results to preview.</pre>
+        </div>
+
+        <div class="field-block">
+          <label for="activityLog">Activity Log</label>
+          <pre id="activityLog" class="code-preview empty">The activity log will appear here.</pre>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="toast-wrap" id="toastWrap" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
