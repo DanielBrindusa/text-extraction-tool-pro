@@ -105,3 +105,52 @@ body.light pre{
   accent-color:#ffffff;
 }
 
+
+/* ---------------- DARK MODE TOGGLE STYLE ---------------- */
+/* Toggle container */
+.toggle-switch{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Base toggle */
+.toggle-switch input[type="checkbox"]{
+  appearance:none;
+  width:44px;
+  height:22px;
+  border-radius:20px;
+  position:relative;
+  cursor:pointer;
+  transition:background .25s, border .25s;
+}
+
+/* DARK MODE: DEACTIVATED STATE */
+body.dark .toggle-switch input[type="checkbox"]:not(:checked){
+  background:#000000;       /* black background */
+  border:2px solid #ffffff; /* white outline */
+}
+
+/* DARK MODE: ACTIVE STATE */
+body.dark .toggle-switch input[type="checkbox"]:checked{
+  background:#4ade80;
+  border:2px solid #4ade80;
+}
+
+/* Toggle knob */
+.toggle-switch input[type="checkbox"]::after{
+  content:"";
+  position:absolute;
+  width:16px;
+  height:16px;
+  border-radius:50%;
+  top:1px;
+  left:2px;
+  background:#ffffff; /* white knob */
+  transition:transform .25s;
+}
+
+/* Move knob when active */
+.toggle-switch input[type="checkbox"]:checked::after{
+  transform:translateX(20px);
+}
