@@ -784,156 +784,77 @@ body.dark .toggle-switch input[type="checkbox"] {
 
 
 
+
+
+
 /* =========================================================
-   OVERRIDES ADDED IN V8
-   - Slightly darker balanced light theme
-   - More visible warm/cool wave layers
+   OVERRIDES ADDED IN V9
+   - Light theme redesigned with bleumarin (navy) background
+   - Light blue wave layers for depth
    ========================================================= */
 
 body.light-theme {
-  --bg: #dde4ee;
-  --bg-elevated: rgba(231, 224, 214, 0.95);
-  --bg-elevated-2: rgba(238, 231, 221, 0.96);
-  --card-border: rgba(153, 140, 124, 0.36);
-  --card-shadow: 0 18px 42px rgba(82, 92, 112, 0.14);
-  --text: #203450;
-  --muted: #5d6d83;
-  --field-bg: rgba(235, 228, 219, 0.97);
-  --field-border: rgba(158, 145, 128, 0.36);
-  --field-focus: rgba(102, 116, 202, 0.24);
-  --accent: #6877dc;
-  --accent-2: #8e81cf;
-  --accent-3: #ab8d6d;
-  --success: #2e866f;
-  --warning: #af7536;
-  --danger: #bf6277;
-  --chip: rgba(104, 119, 220, 0.11);
-  --chip-border: rgba(104, 119, 220, 0.20);
-  --scrollbar: rgba(66, 80, 106, 0.20);
-  --scrollbar-hover: rgba(66, 80, 106, 0.30);
-  --selection: rgba(104, 119, 220, 0.18);
+  --bg: #0f1f3a;
+  --bg-elevated: rgba(28, 44, 72, 0.85);
+  --bg-elevated-2: rgba(34, 52, 84, 0.92);
+  --card-border: rgba(120, 150, 210, 0.25);
+  --text: #dbe7ff;
+  --muted: #9fb3d6;
+  --field-bg: rgba(20, 36, 66, 0.85);
+  --field-border: rgba(120, 150, 210, 0.25);
+  --accent: #6ea8ff;
+  --accent-2: #9ac2ff;
 }
 
 body.light-theme {
   background:
-    radial-gradient(circle at 6% 10%, rgba(194, 167, 137, 0.30), transparent 24%),
-    radial-gradient(circle at 24% 72%, rgba(161, 145, 214, 0.22), transparent 22%),
-    radial-gradient(circle at 82% 16%, rgba(135, 145, 214, 0.24), transparent 24%),
-    radial-gradient(circle at 72% 78%, rgba(205, 182, 154, 0.26), transparent 26%),
-    radial-gradient(circle at 48% 42%, rgba(222, 204, 183, 0.18), transparent 30%),
-    linear-gradient(180deg, #e7ebf2 0%, #dbe2eb 100%);
-}
-
-body.light-theme .bg-grid {
-  background-image:
-    linear-gradient(rgba(32, 52, 80, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(32, 52, 80, 0.05) 1px, transparent 1px);
-}
-
-body.light-theme .bg-orb.orb-1 {
-  background: radial-gradient(circle, rgba(198, 170, 138, 0.30) 0%, rgba(198, 170, 138, 0) 67%);
-  filter: blur(8px);
-}
-
-body.light-theme .bg-orb.orb-2 {
-  background: radial-gradient(circle, rgba(138, 147, 215, 0.26) 0%, rgba(138, 147, 215, 0) 67%);
-  filter: blur(10px);
+    radial-gradient(circle at 10% 20%, rgba(120,170,255,0.35), transparent 28%),
+    radial-gradient(circle at 75% 15%, rgba(110,160,255,0.28), transparent 30%),
+    radial-gradient(circle at 40% 80%, rgba(160,200,255,0.25), transparent 32%),
+    radial-gradient(circle at 85% 70%, rgba(120,170,255,0.22), transparent 35%),
+    linear-gradient(180deg,#0d1b33 0%, #132a4d 60%, #0c1a31 100%);
 }
 
 body.light-theme .glass-card,
 body.light-theme .panel,
 body.light-theme .stat-card {
-  background: linear-gradient(180deg, rgba(234, 227, 218, 0.95), rgba(226, 219, 209, 0.95));
-  border-color: rgba(155, 141, 124, 0.34);
-  box-shadow: 0 18px 44px rgba(82, 93, 112, 0.12);
-}
-
-body.light-theme h1,
-body.light-theme h2,
-body.light-theme h3,
-body.light-theme label,
-body.light-theme .stat-card strong,
-body.light-theme .hero-copy p strong {
-  color: #203450;
-}
-
-body.light-theme .hero-copy p,
-body.light-theme .stat-label,
-body.light-theme .section-kicker,
-body.light-theme .field-help,
-body.light-theme .switch-card small,
-body.light-theme .status-chip {
-  color: #5d6d83;
+  background: linear-gradient(180deg, rgba(30,48,78,0.9), rgba(24,40,66,0.92));
+  border-color: rgba(120,160,220,0.25);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.35);
 }
 
 body.light-theme input,
 body.light-theme textarea,
 body.light-theme select,
-body.light-theme .editor,
-body.light-theme .dropzone,
-body.light-theme .preview-box,
-body.light-theme .test-output,
-body.light-theme .results-preview {
-  background: rgba(235, 229, 220, 0.97);
-  color: #203450;
-  border-color: rgba(160, 146, 129, 0.36);
+body.light-theme .preview-box {
+  background: rgba(18,32,58,0.9);
+  color: #e3edff;
+  border-color: rgba(120,160,220,0.3);
 }
 
 body.light-theme .glass-btn,
 body.light-theme .btn,
 body.light-theme .segment-btn {
-  background: linear-gradient(180deg, rgba(212, 216, 239, 0.98), rgba(201, 206, 233, 0.98));
-  color: #223853;
-  border-color: rgba(120, 129, 176, 0.28);
-  box-shadow: 0 8px 20px rgba(96, 106, 150, 0.12);
+  background: linear-gradient(180deg,#5e8fe6,#4a76c8);
+  color: #ffffff;
+  border-color: rgba(140,180,255,0.3);
 }
 
 body.light-theme .glass-btn:hover,
 body.light-theme .btn:hover,
 body.light-theme .segment-btn:hover {
-  background: linear-gradient(180deg, rgba(204, 209, 236, 1), rgba(194, 200, 229, 1));
-  color: #1c304a;
+  background: linear-gradient(180deg,#74a5ff,#5a86d6);
 }
 
-body.light-theme .segment-btn.active,
-body.light-theme .btn-primary,
-body.light-theme .btn-secondary {
-  background: linear-gradient(135deg, rgba(108, 119, 208, 0.95), rgba(142, 130, 202, 0.95));
-  color: #ffffff;
-  border-color: rgba(108, 119, 208, 0.28);
+body.light-theme h1,
+body.light-theme h2,
+body.light-theme h3,
+body.light-theme label {
+  color:#e6f0ff;
 }
 
-body.light-theme .theme-toggle {
-  background: linear-gradient(180deg, rgba(224, 218, 209, 0.96), rgba(214, 207, 198, 0.96));
-  color: #203450;
+body.light-theme .hero-copy p,
+body.light-theme .field-help,
+body.light-theme .status-chip {
+  color:#a8bde3;
 }
-
-body.light-theme .hero-copy .eyebrow,
-body.light-theme .section-kicker {
-  background: rgba(104, 119, 220, 0.11);
-  border-color: rgba(104, 119, 220, 0.20);
-  color: #4f63b2;
-}
-
-/* Dark theme: make the HTML Attribute toggle clearly visible when OFF */
-body:not(.light-theme) .switch-card input:not(:checked) + .switch-ui {
-  background: #000000;
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
-}
-
-body:not(.light-theme) .switch-card input:not(:checked) + .switch-ui::before {
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.34);
-}
-
-/* Light theme: keep the switch elegant as well */
-body.light-theme .switch-card input:not(:checked) + .switch-ui {
-  background: rgba(198, 203, 218, 0.96);
-  border-color: rgba(138, 147, 171, 0.46);
-}
-
-body.light-theme .switch-card input:not(:checked) + .switch-ui::before {
-  background: linear-gradient(180deg, #ffffff, #e8ecf5);
-}
-
